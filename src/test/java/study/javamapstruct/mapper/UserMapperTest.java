@@ -21,22 +21,26 @@ class UserMapperTest {
     void 맵핑_테스트() throws Exception {
         UserMapper userMapper = UserMapper.INSTANCE;
 
+        // 샘플 값
         String email = "test@test.com";
         String name = "Test name";
         int age = 20;
         String location = "서울";
         String detail = "강남";
 
+        // DTO 생성
         UserDto dto = new UserDto();
         dto.setEmail(email);
         dto.setName(name);
         dto.setAge(age);
 
+        // DTO -> Entity 검증
         User entity = userMapper.toEntity(dto);
         assertThat(entity.getEmail()).isEqualTo(email);
         assertThat(entity.getName()).isEqualTo(name);
         assertThat(entity.getAge()).isEqualTo(age);
 
+        // DTO + Address -> Entity 검증
         Address address = new Address(location, detail);
         User entityWithAddress = userMapper.toEntityWithAddress(dto, address);
         assertThat(entityWithAddress.getAddress().getLocation()).isEqualTo(location);
